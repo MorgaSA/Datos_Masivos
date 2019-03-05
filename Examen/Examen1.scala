@@ -3,7 +3,9 @@ def Par(num:Int):Boolean={
     var par = num % 2
     (par == 0)
 }
-
+Par(5)
+Par(4)
+Par(150)
 //Buscar numeros pares en una lista
 def listEvens(list:List[Int]): String ={
     for(n <- list){
@@ -76,6 +78,6 @@ else{
 }
 }
 
-Cadena(ANITALAVALATINA)
-Cadena(reconocer)
-Cadena(Analfabeto)
+Cadena("ANITALAVALATINA")
+Cadena("reconocer")
+Cadena("Analfabeto")
