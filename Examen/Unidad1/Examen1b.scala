@@ -1,20 +1,28 @@
 import org.apache.spark.sql.SparkSession
 val spark = SparkSession.builder().getOrCreate()
+
 val df = spark.read.option("header", "true").option("inferSchema","true")csv("Netflix_2011_2016.csv")
+
 df.columns
+
 df.printSchema()
+
 for(row <- df.head(5)){
     println(row)
 }
+
 df.describe()
-val df2 = df.withColumn("HVRatio", df("High")+df("Volume"))
-df2.printSchema()
 
+val df2 = df.withColumn("HVRatio", df("Volume")/df("High"))
+df2.show()
+df2.printSchema() 
 df2("HVRatio").as("HVR")
-
 df2.select("HVRatio").as("HVR").show
+
 df.orderBy($"High".desc).show()
+
 //Es el valor de las "acciones" para el final de cada dia
+
 df.select(max("Volume")).show()
 df.select(min("Volume")).show()
 
@@ -26,11 +34,11 @@ val rs1 = (Per*100)/tot
 
 df.select(corr("High", "Volume")).show()
 
-df.select(max("High")).show()
+val df3=df.withColumn("Year",year(df("Date")))
+val dfmax=df3.groupBy("Year").max()
+dfmax.select($"Year",$"max(High)").show()
 
-val df3 = df.select(year(column("Date"))).distinct()
-val df3b = df3.count()
-val df4 = df.select("High",distinct(year(column("Date"))).show()
-val df5a = df.select(mean("High")).value()
-val df5 = df.filter($"High"> df5a )
-distinct(year(column("Date"))
+val dfmonth=df.withColumn("Month",month(df("Date")))
+val dfmean=dfmonth.select($"Month",$"Close").groupBy("Month").mean()
+dfmean.orderBy($"Month".desc).show()
+dfmean.orderBy($"Month").show()
