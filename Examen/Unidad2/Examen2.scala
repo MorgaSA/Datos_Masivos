@@ -8,11 +8,8 @@ import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.ml.feature.StringIndexer
 import org.apache.spark.ml.linalg.Vectors
 import org.apache.spark.ml.Pipeline
-//importaciones necesarias para ingresar a las librerias necesarias 
-//para quitar muchos errores de el procedimiento de conversion
+//importaciones necesarias para ingresar a las librerias necesarias  para crear los esquemas
 import org.apache.spark.sql.types._
-import org.apache.log4j._
-Logger.getLogger("org").setLevel(Level.ERROR)
 //Empezamos el inicio de sesion de spark
 val spark = SparkSession.builder().getOrCreate()
 //cargamos el csv
@@ -44,6 +41,7 @@ val test = splits(1)
 //la medida de nuestra entrada es de 4
 //la medida de las capas intermedias es 5 y 4 
 //y la medida de la salida es de 3
+//utilizamos la funcion sigmoid logica 
 val neuronas = Array[Int](4, 5, 4, 3)
 //Creamos un trainer con las especificaciones de nuestra clasificacion
 val trainer = new MultilayerPerceptronClassifier().
